@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olga's GuideHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:     #FBF9F7;
+      --warm:      #F6F1EB;
+      --border:    #EADFD4;
+      --gold:      #CBB89D;
+      --ink:       #2B2B2B;
+      --ink-70:    rgba(43,43,43,.70);
+      --ink-60:    rgba(43,43,43,.60);
+      --ink-50:    rgba(43,43,43,.50);
+      --ink-20:    rgba(43,43,43,.20);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-weight: 300; background: var(--cream); color: var(--ink); }
+
+    /* ── GLOW ── */
+    .glow {
+      position: absolute; width: 100%; pointer-events: none; overflow: hidden;
+    }
+    .glow--above { top: -128px; }
+    .glow--center { top: 50%; transform: translateY(-50%); }
+    .glow__outer, .glow__inner {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      border-radius: 50%;
+    }
+    .glow__outer {
+      width: 60%; height: 256px; transform: translateX(-50%) scale(2.5);
+      background: radial-gradient(ellipse at center, hsla(30,35%,66%,.15) 10%, transparent 60%);
+    }
+    .glow__inner {
+      width: 40%; height: 128px; transform: translateX(-50%) scale(2);
+      background: radial-gradient(ellipse at center, hsla(30,35%,66%,.10) 10%, transparent 60%);
+    }
+    .glow--center .glow__outer,
+    .glow--center .glow__inner { transform: translateX(-50%) translateY(-50%) scale(2.5); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; background: var(--cream);
+      overflow: hidden; padding: 9rem 1.5rem 10rem;
+    }
+    #hero .glow { opacity: .2; }
+
+    .hero__inner {
+      position: relative; z-index: 2;
+      max-width: 56rem; margin: 0 auto; text-align: center;
+    }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem 1.25rem; border-radius: 9999px;
+      background: var(--warm); border: 1px solid rgba(234,223,212,.4);
+      font-size: .75rem; letter-spacing: .04em; color: var(--ink);
+      margin-bottom: 3rem;
+    }
+    .pill svg { width: 14px; height: 14px; color: var(--gold); flex-shrink: 0; }
+
+    h1 {
+      font-family: 'Playfair Display', serif; font-weight: 400;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      line-height: 1.12; letter-spacing: -.02em; color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    h1 em { font-style: italic; }
+
+    .hero__sub {
+      font-size: clamp(1.1rem, 2.2vw, 1.375rem); font-weight: 300;
+      color: var(--ink-70); letter-spacing: .03em; margin-bottom: 2rem;
+    }
+
+    .hero__bio {
+      font-size: clamp(.9rem, 1.6vw, 1.0625rem); color: var(--ink-70);
+      max-width: 38rem; margin: 0 auto 3.5rem; line-height: 1.75;
+    }
+
+    .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2.5rem; font-size: .8125rem; font-weight: 300;
+      letter-spacing: .06em; border: none; cursor: pointer;
+      text-decoration: none; transition: background .25s, color .25s;
+    }
+    .btn svg { width: 16px; height: 16px; }
+
+    .btn--primary { background: var(--ink); color: #fff; }
+    .btn--primary:hover { background: #1a1a1a; }
+
+    .btn--outline {
+      background: transparent; color: var(--ink);
+      border: 1px solid var(--ink-20);
+    }
+    .btn--outline:hover { background: var(--warm); }
+
+    /* mouse glow overlay */
+    #hero-overlay {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      transition: background .05s;
+    }
+
+    /* ── FEATURES ── */
+    #features { background: #fff; padding: 6rem 1.5rem; }
+
+    .section-head { text-align: center; margin-bottom: 5rem; }
+
+    h2 {
+      font-family: 'Playfair Display', serif; font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3.125rem);
+      letter-spacing: -.015em; color: var(--ink); margin-bottom: 1.25rem;
+    }
+
+    .section-head p {
+      font-size: .9375rem; color: var(--ink-70);
+      max-width: 32rem; margin: 0 auto; line-height: 1.8;
+    }
+
+    .cards {
+      display: grid; gap: 2rem; max-width: 72rem; margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: var(--cream); padding: 2.5rem;
+      border: 1px solid rgba(234,223,212,.3);
+      transition: border-color .3s;
+    }
+    .card:hover { border-color: rgba(203,184,157,.4); }
+
+    .card__icon {
+      width: 3rem; height: 3rem; border-radius: 50%;
+      background: var(--warm); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .card__icon svg { width: 20px; height: 20px; color: var(--gold); }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif; font-weight: 400;
+      font-size: 1.25rem; color: var(--ink); margin-bottom: 1rem;
+    }
+    .card p { font-size: .875rem; color: var(--ink-70); line-height: 1.8; }
+
+    /* ── CTA ── */
+    #cta {
+      position: relative; background: var(--warm);
+      padding: 8rem 1.5rem; overflow: hidden;
+    }
+    #cta .glow { opacity: .15; }
+
+    .cta__inner {
+      position: relative; z-index: 2;
+      max-width: 40rem; margin: 0 auto; text-align: center;
+    }
+    .cta__inner p {
+      font-size: .9375rem; color: var(--ink-70);
+      line-height: 1.8; margin-bottom: 3rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--cream);
+      border-top: 1px solid rgba(234,223,212,.3);
+      color: var(--ink-70); padding: 4rem 1.5rem;
+    }
+
+    .footer__grid {
+      display: grid; gap: 3rem; max-width: 72rem; margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-bottom: 3rem;
+    }
+
+    .footer__brand { grid-column: span 2; }
+    @media(max-width: 640px){ .footer__brand { grid-column: span 1; } }
+
+    .footer__brand h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem;
+      font-weight: 400; color: var(--ink); margin-bottom: 1rem;
+    }
+    .footer__brand p {
+      font-size: .8125rem; color: var(--ink-60);
+      max-width: 26rem; line-height: 1.8; margin-bottom: 1.5rem;
+    }
+
+    .socials { display: flex; gap: .75rem; }
+    .socials a {
+      width: 2.25rem; height: 2.25rem; border-radius: 50%;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink-70); text-decoration: none;
+      transition: background .25s;
+    }
+    .socials a:hover { background: var(--warm); }
+    .socials svg { width: 16px; height: 16px; }
+
+    .footer__col h4 {
+      font-size: .8125rem; font-weight: 300; color: var(--ink);
+      letter-spacing: .06em; margin-bottom: 1rem;
+    }
+    .footer__col ul { list-style: none; }
+    .footer__col li + li { margin-top: .75rem; }
+    .footer__col a {
+      font-size: .8125rem; font-weight: 300;
+      color: var(--ink-70); text-decoration: none; transition: color .2s;
+    }
+    .footer__col a:hover { color: var(--ink); }
+
+    .footer__bottom {
+      border-top: 1px solid rgba(234,223,212,.3);
+      padding-top: 2rem; text-align: center;
+      font-size: .75rem; color: var(--ink-50);
+      max-width: 72rem; margin: 0 auto;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width: 640px){
+      #hero { padding: 6rem 1.25rem 7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="glow glow--above">
+    <div class="glow__outer"></div>
+    <div class="glow__inner"></div>
+  </div>
+  <div id="hero-overlay"></div>
+
+  <div class="hero__inner fade-in">
+    <!-- pill badge -->
+    <div class="pill">
+      <!-- sparkles icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
+        <path d="M5 17l.75 2.25L8 20l-2.25.75L5 23l-.75-2.25L2 20l2.25-.75z"/>
+        <path d="M18 3l.75 2.25L21 6l-2.25.75L18 9l-.75-2.25L15 6l2.25-.75z"/>
+      </svg>
+      You're not alone in this journey
+    </div>
+
+    <h1>Welcome to <em>Olga's GuideHub</em></h1>
+    <p class="hero__sub">A safe space to prepare for life-changing conversations</p>
+    <p class="hero__bio">
+      Hi, I'm Olga. With over 15 years as a senior recruiter, I've helped hundreds of people navigate high-pressure interviews, career transitions, and immigration-related conversations. I'm here to help you feel confident and prepared.
+    </p>
+
+    <div class="btn-group">
+      <a href="#features" class="btn btn--primary">
+        Start preparing together
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#cta" class="btn btn--outline">Learn about my approach</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section id="features">
+  <div class="section-head fade-in">
+    <h2>How I can help you</h2>
+    <p>Whether you're preparing for a job interview, a career change, or an immigration-related conversation, I'm here to support you every step of the way.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card fade-in">
+      <div class="card__icon">
+        <!-- book-open icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+      </div>
+      <h3>Interview preparation that works</h3>
+      <p>Real strategies from 15+ years of helping people succeed in job interviews, immigration interviews, and career-defining conversations.</p>
+    </div>
+
+    <div class="card fade-in" style="transition-delay:.1s">
+      <div class="card__icon">
+        <!-- users icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <h3>Someone who gets it</h3>
+      <p>I understand the stress of immigration processes and high-stakes interviews. You'll have a guide who's walked this path with many others before you.</p>
+    </div>
+
+    <div class="card fade-in" style="transition-delay:.2s">
+      <div class="card__icon">
+        <!-- sparkles icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
+          <path d="M5 17l.75 2.25L8 20l-2.25.75L5 23l-.75-2.25L2 20l2.25-.75z"/>
+          <path d="M18 3l.75 2.25L21 6l-2.25.75L18 9l-.75-2.25L15 6l2.25-.75z"/>
+        </svg>
+      </div>
+      <h3>A safe, supportive space</h3>
+      <p>This is a judgment-free zone. We'll work through your concerns together, at your pace, until you feel truly ready.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="glow glow--center">
+    <div class="glow__outer"></div>
+    <div class="glow__inner"></div>
+  </div>
+  <div class="cta__inner fade-in">
+    <h2>You don't have to do this alone</h2>
+    <p>Let's work together to help you feel prepared, confident, and calm for whatever conversation lies ahead.</p>
+    <a href="#" class="btn btn--primary">
+      Let's get started
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <h3>Olga's GuideHub</h3>
+      <p>A warm, supportive space for interview preparation, career transitions, and immigration-related conversations. 15+ years of recruiting experience, here to help you succeed.</p>
+      <div class="socials">
+        <!-- twitter -->
+        <a href="#" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.85 1.1A4.52 4.52 0 0 0 16.11 0c-2.5 0-4.52 2.02-4.52 4.52 0 .35.04.7.11 1.03C7.69 5.38 4.07 3.58 1.64.9a4.52 4.52 0 0 0-.61 2.27c0 1.57.8 2.95 2.01 3.76a4.5 4.5 0 0 1-2.05-.57v.06c0 2.19 1.56 4.02 3.63 4.43a4.5 4.5 0 0 1-2.04.08c.57 1.79 2.24 3.09 4.22 3.12A9.06 9.06 0 0 1 0 19.54a12.8 12.8 0 0 0 6.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.01-.58A9.17 9.17 0 0 0 23 3z"/>
+          </svg>
+        </a>
+        <!-- github -->
+        <a href="#" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+          </svg>
+        </a>
+        <!-- mail -->
+        <a href="#" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Interview prep</a></li>
+        <li><a href="#">Career transitions</a></li>
+        <li><a href="#">Immigration support</a></li>
+        <li><a href="#">Testimonials</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>&copy; 2024 Olga's GuideHub. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ── Scroll-triggered fade-in ──
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.15 }
+  );
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Kick off hero immediately
+  document.querySelector('#hero .fade-in').classList.add('visible');
+
+  // ── Mouse-glow on hero ──
+  const hero    = document.getElementById('hero');
+  const overlay = document.getElementById('hero-overlay');
+  hero.addEventListener('mousemove', e => {
+    const r = hero.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    overlay.style.background =
+      `radial-gradient(circle 200px at ${x}px ${y}px, rgba(203,184,157,.07), transparent)`;
+  });
+  hero.addEventListener('mouseleave', () => { overlay.style.background = 'none'; });
+</script>
+</body>
+</html>
