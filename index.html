@@ -3,415 +3,601 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Olga's GuideHub</title>
+  <title>Olga's GuideHub — Interview Prep & USCIS Coaching</title>
+  <meta name="description" content="15+ years as a senior recruiter. I help immigrants and job seekers prepare for USCIS interviews, job interviews, and career-defining conversations." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream:     #FBF9F7;
-      --warm:      #F6F1EB;
-      --border:    #EADFD4;
-      --gold:      #CBB89D;
-      --ink:       #2B2B2B;
-      --ink-70:    rgba(43,43,43,.70);
-      --ink-60:    rgba(43,43,43,.60);
-      --ink-50:    rgba(43,43,43,.50);
-      --ink-20:    rgba(43,43,43,.20);
-    }
-
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; font-weight: 300; background: var(--cream); color: var(--ink); }
-
-    /* ── GLOW ── */
-    .glow {
-      position: absolute; width: 100%; pointer-events: none; overflow: hidden;
-    }
-    .glow--above { top: -128px; }
-    .glow--center { top: 50%; transform: translateY(-50%); }
-    .glow__outer, .glow__inner {
-      position: absolute; left: 50%; transform: translateX(-50%);
-      border-radius: 50%;
-    }
-    .glow__outer {
-      width: 60%; height: 256px; transform: translateX(-50%) scale(2.5);
-      background: radial-gradient(ellipse at center, hsla(30,35%,66%,.15) 10%, transparent 60%);
-    }
-    .glow__inner {
-      width: 40%; height: 128px; transform: translateX(-50%) scale(2);
-      background: radial-gradient(ellipse at center, hsla(30,35%,66%,.10) 10%, transparent 60%);
-    }
-    .glow--center .glow__outer,
-    .glow--center .glow__inner { transform: translateX(-50%) translateY(-50%) scale(2.5); }
-
-    /* ── HERO ── */
-    #hero {
-      position: relative; background: var(--cream);
-      overflow: hidden; padding: 9rem 1.5rem 10rem;
-    }
-    #hero .glow { opacity: .2; }
-
-    .hero__inner {
-      position: relative; z-index: 2;
-      max-width: 56rem; margin: 0 auto; text-align: center;
-    }
-
-    .pill {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .5rem 1.25rem; border-radius: 9999px;
-      background: var(--warm); border: 1px solid rgba(234,223,212,.4);
-      font-size: .75rem; letter-spacing: .04em; color: var(--ink);
-      margin-bottom: 3rem;
-    }
-    .pill svg { width: 14px; height: 14px; color: var(--gold); flex-shrink: 0; }
-
-    h1 {
-      font-family: 'Playfair Display', serif; font-weight: 400;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      line-height: 1.12; letter-spacing: -.02em; color: var(--ink);
-      margin-bottom: 1.25rem;
-    }
-    h1 em { font-style: italic; }
-
-    .hero__sub {
-      font-size: clamp(1.1rem, 2.2vw, 1.375rem); font-weight: 300;
-      color: var(--ink-70); letter-spacing: .03em; margin-bottom: 2rem;
-    }
-
-    .hero__bio {
-      font-size: clamp(.9rem, 1.6vw, 1.0625rem); color: var(--ink-70);
-      max-width: 38rem; margin: 0 auto 3.5rem; line-height: 1.75;
-    }
-
-    .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: .5rem;
-      padding: .9rem 2.5rem; font-size: .8125rem; font-weight: 300;
-      letter-spacing: .06em; border: none; cursor: pointer;
-      text-decoration: none; transition: background .25s, color .25s;
-    }
-    .btn svg { width: 16px; height: 16px; }
-
-    .btn--primary { background: var(--ink); color: #fff; }
-    .btn--primary:hover { background: #1a1a1a; }
-
-    .btn--outline {
-      background: transparent; color: var(--ink);
-      border: 1px solid var(--ink-20);
-    }
-    .btn--outline:hover { background: var(--warm); }
-
-    /* mouse glow overlay */
-    #hero-overlay {
-      position: absolute; inset: 0; pointer-events: none; z-index: 1;
-      transition: background .05s;
-    }
-
-    /* ── FEATURES ── */
-    #features { background: #fff; padding: 6rem 1.5rem; }
-
-    .section-head { text-align: center; margin-bottom: 5rem; }
-
-    h2 {
-      font-family: 'Playfair Display', serif; font-weight: 400;
-      font-size: clamp(2rem, 4.5vw, 3.125rem);
-      letter-spacing: -.015em; color: var(--ink); margin-bottom: 1.25rem;
-    }
-
-    .section-head p {
-      font-size: .9375rem; color: var(--ink-70);
-      max-width: 32rem; margin: 0 auto; line-height: 1.8;
-    }
-
-    .cards {
-      display: grid; gap: 2rem; max-width: 72rem; margin: 0 auto;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .card {
-      background: var(--cream); padding: 2.5rem;
-      border: 1px solid rgba(234,223,212,.3);
-      transition: border-color .3s;
-    }
-    .card:hover { border-color: rgba(203,184,157,.4); }
-
-    .card__icon {
-      width: 3rem; height: 3rem; border-radius: 50%;
-      background: var(--warm); display: flex; align-items: center; justify-content: center;
-      margin-bottom: 2rem;
-    }
-    .card__icon svg { width: 20px; height: 20px; color: var(--gold); }
-
-    .card h3 {
-      font-family: 'Playfair Display', serif; font-weight: 400;
-      font-size: 1.25rem; color: var(--ink); margin-bottom: 1rem;
-    }
-    .card p { font-size: .875rem; color: var(--ink-70); line-height: 1.8; }
-
-    /* ── CTA ── */
-    #cta {
-      position: relative; background: var(--warm);
-      padding: 8rem 1.5rem; overflow: hidden;
-    }
-    #cta .glow { opacity: .15; }
-
-    .cta__inner {
-      position: relative; z-index: 2;
-      max-width: 40rem; margin: 0 auto; text-align: center;
-    }
-    .cta__inner p {
-      font-size: .9375rem; color: var(--ink-70);
-      line-height: 1.8; margin-bottom: 3rem;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--cream);
-      border-top: 1px solid rgba(234,223,212,.3);
-      color: var(--ink-70); padding: 4rem 1.5rem;
-    }
-
-    .footer__grid {
-      display: grid; gap: 3rem; max-width: 72rem; margin: 0 auto;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      margin-bottom: 3rem;
-    }
-
-    .footer__brand { grid-column: span 2; }
-    @media(max-width: 640px){ .footer__brand { grid-column: span 1; } }
-
-    .footer__brand h3 {
-      font-family: 'Playfair Display', serif; font-size: 1.5rem;
-      font-weight: 400; color: var(--ink); margin-bottom: 1rem;
-    }
-    .footer__brand p {
-      font-size: .8125rem; color: var(--ink-60);
-      max-width: 26rem; line-height: 1.8; margin-bottom: 1.5rem;
-    }
-
-    .socials { display: flex; gap: .75rem; }
-    .socials a {
-      width: 2.25rem; height: 2.25rem; border-radius: 50%;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--ink-70); text-decoration: none;
-      transition: background .25s;
-    }
-    .socials a:hover { background: var(--warm); }
-    .socials svg { width: 16px; height: 16px; }
-
-    .footer__col h4 {
-      font-size: .8125rem; font-weight: 300; color: var(--ink);
-      letter-spacing: .06em; margin-bottom: 1rem;
-    }
-    .footer__col ul { list-style: none; }
-    .footer__col li + li { margin-top: .75rem; }
-    .footer__col a {
-      font-size: .8125rem; font-weight: 300;
-      color: var(--ink-70); text-decoration: none; transition: color .2s;
-    }
-    .footer__col a:hover { color: var(--ink); }
-
-    .footer__bottom {
-      border-top: 1px solid rgba(234,223,212,.3);
-      padding-top: 2rem; text-align: center;
-      font-size: .75rem; color: var(--ink-50);
-      max-width: 72rem; margin: 0 auto;
-    }
-
-    /* ── ANIMATIONS ── */
-    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    @media(max-width: 640px){
-      #hero { padding: 6rem 1.25rem 7rem; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero">
-  <div class="glow glow--above">
-    <div class="glow__outer"></div>
-    <div class="glow__inner"></div>
-  </div>
-  <div id="hero-overlay"></div>
-
-  <div class="hero__inner fade-in">
-    <!-- pill badge -->
-    <div class="pill">
-      <!-- sparkles icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
-        <path d="M5 17l.75 2.25L8 20l-2.25.75L5 23l-.75-2.25L2 20l2.25-.75z"/>
-        <path d="M18 3l.75 2.25L21 6l-2.25.75L18 9l-.75-2.25L15 6l2.25-.75z"/>
-      </svg>
-      You're not alone in this journey
-    </div>
-
-    <h1>Welcome to <em>Olga's GuideHub</em></h1>
-    <p class="hero__sub">A safe space to prepare for life-changing conversations</p>
-    <p class="hero__bio">
-      Hi, I'm Olga. With over 15 years as a senior recruiter, I've helped hundreds of people navigate high-pressure interviews, career transitions, and immigration-related conversations. I'm here to help you feel confident and prepared.
-    </p>
-
-    <div class="btn-group">
-      <a href="#features" class="btn btn--primary">
-        Start preparing together
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#cta" class="btn btn--outline">Learn about my approach</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FEATURES ═══ -->
-<section id="features">
-  <div class="section-head fade-in">
-    <h2>How I can help you</h2>
-    <p>Whether you're preparing for a job interview, a career change, or an immigration-related conversation, I'm here to support you every step of the way.</p>
-  </div>
-
-  <div class="cards">
-    <div class="card fade-in">
-      <div class="card__icon">
-        <!-- book-open icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-        </svg>
-      </div>
-      <h3>Interview preparation that works</h3>
-      <p>Real strategies from 15+ years of helping people succeed in job interviews, immigration interviews, and career-defining conversations.</p>
-    </div>
-
-    <div class="card fade-in" style="transition-delay:.1s">
-      <div class="card__icon">
-        <!-- users icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </div>
-      <h3>Someone who gets it</h3>
-      <p>I understand the stress of immigration processes and high-stakes interviews. You'll have a guide who's walked this path with many others before you.</p>
-    </div>
-
-    <div class="card fade-in" style="transition-delay:.2s">
-      <div class="card__icon">
-        <!-- sparkles icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>
-          <path d="M5 17l.75 2.25L8 20l-2.25.75L5 23l-.75-2.25L2 20l2.25-.75z"/>
-          <path d="M18 3l.75 2.25L21 6l-2.25.75L18 9l-.75-2.25L15 6l2.25-.75z"/>
-        </svg>
-      </div>
-      <h3>A safe, supportive space</h3>
-      <p>This is a judgment-free zone. We'll work through your concerns together, at your pace, until you feel truly ready.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CTA ═══ -->
-<section id="cta">
-  <div class="glow glow--center">
-    <div class="glow__outer"></div>
-    <div class="glow__inner"></div>
-  </div>
-  <div class="cta__inner fade-in">
-    <h2>You don't have to do this alone</h2>
-    <p>Let's work together to help you feel prepared, confident, and calm for whatever conversation lies ahead.</p>
-    <a href="#" class="btn btn--primary">
-      Let's get started
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<header class="navbar" id="navbar">
+  <nav class="nav-inner">
+    <a href="#home" class="brand">
+      <span class="brand-mark">✦</span>
+      <span>Olga's <strong>GuideHub</strong></span>
     </a>
-  </div>
-</section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <div class="footer__grid">
-    <div class="footer__brand">
-      <h3>Olga's GuideHub</h3>
-      <p>A warm, supportive space for interview preparation, career transitions, and immigration-related conversations. 15+ years of recruiting experience, here to help you succeed.</p>
-      <div class="socials">
-        <!-- twitter -->
-        <a href="#" aria-label="Twitter">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.85 1.1A4.52 4.52 0 0 0 16.11 0c-2.5 0-4.52 2.02-4.52 4.52 0 .35.04.7.11 1.03C7.69 5.38 4.07 3.58 1.64.9a4.52 4.52 0 0 0-.61 2.27c0 1.57.8 2.95 2.01 3.76a4.5 4.5 0 0 1-2.05-.57v.06c0 2.19 1.56 4.02 3.63 4.43a4.5 4.5 0 0 1-2.04.08c.57 1.79 2.24 3.09 4.22 3.12A9.06 9.06 0 0 1 0 19.54a12.8 12.8 0 0 0 6.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.01-.58A9.17 9.17 0 0 0 23 3z"/>
-          </svg>
-        </a>
-        <!-- github -->
-        <a href="#" aria-label="GitHub">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-          </svg>
-        </a>
-        <!-- mail -->
-        <a href="#" aria-label="Email">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-        </a>
+    <button class="burger" id="burger" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home"      class="nl">Home</a></li>
+      <li><a href="#uscis"     class="nl">USCIS Prep</a></li>
+      <li><a href="#recruiter" class="nl">Recruiter Advice</a></li>
+      <li><a href="#videos"    class="nl">Videos</a></li>
+      <li><a href="#about"     class="nl">About</a></li>
+      <li><a href="#contact"   class="nl nl-cta">Work with Me</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section id="home" class="hero">
+  <div class="hero-inner container">
+
+    <div class="hero-copy reveal-up">
+      <span class="pill">🌸 Trusted by hundreds of clients</span>
+      <h1>Feel confident<br /><em>walking in the door.</em></h1>
+      <p class="hero-sub">
+        15+ years as a senior recruiter. I help immigrants, job seekers, and
+        USCIS interview candidates prepare for the conversations that change
+        their lives — with calm, strategy, and real experience.
+      </p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-rose">Start preparing together →</a>
+        <a href="#about"   class="btn btn-ghost">Learn about my approach</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-n">15+</span><span>Years recruiting</span></div>
+        <div class="trust-div"></div>
+        <div class="trust-item"><span class="trust-n">500+</span><span>Clients guided</span></div>
+        <div class="trust-div"></div>
+        <div class="trust-item"><span class="trust-n">98%</span><span>Pass rate</span></div>
       </div>
     </div>
 
-    <div class="footer__col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#">Interview prep</a></li>
-        <li><a href="#">Career transitions</a></li>
-        <li><a href="#">Immigration support</a></li>
-        <li><a href="#">Testimonials</a></li>
-      </ul>
+    <div class="hero-visual reveal-right">
+      <div class="hero-frame">
+        <img src="olga.jpg" alt="Olga — Senior Recruiter & Interview Coach" class="hero-photo" />
+        <div class="hero-chip">
+          <span>🏅</span>
+          <div>
+            <strong>Senior Recruiter</strong>
+            <small>15+ Years Experience</small>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="footer__col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Terms</a></li>
-      </ul>
+  </div>
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,36 C480,72 960,0 1440,36 L1440,72 L0,72 Z" fill="var(--ivory)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════ SERVICES ════════════════════ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-grid">
+      <div class="svc-card reveal-up">
+        <div class="svc-ico">🏛️</div>
+        <h3>USCIS Interview Prep</h3>
+        <p>Personalized coaching so you walk into your citizenship or green card interview ready, calm, and confident.</p>
+      </div>
+      <div class="svc-card reveal-up" style="--d:.08s">
+        <div class="svc-ico">💼</div>
+        <h3>Job Interview Coaching</h3>
+        <p>Real strategies from a hiring expert. Know exactly what recruiters look for — and how to deliver it.</p>
+      </div>
+      <div class="svc-card reveal-up" style="--d:.16s">
+        <div class="svc-ico">📄</div>
+        <h3>Resume & Career Transitions</h3>
+        <p>From resume review to career pivots — I help you present your story in a way that opens doors.</p>
+      </div>
+      <div class="svc-card reveal-up" style="--d:.24s">
+        <div class="svc-ico">🤝</div>
+        <h3>A Safe, Supportive Space</h3>
+        <p>No judgment, no rush. We work at your pace until you feel truly prepared for what's ahead.</p>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="footer__bottom">
-    <p>&copy; 2024 Olga's GuideHub. All rights reserved.</p>
+<!-- ════════════════════ USCIS SECTION ════════════════════ -->
+<section id="uscis" class="uscis-section">
+  <div class="container">
+
+    <div class="section-hd reveal-up" style="--c:var(--rose-light)">
+      <span class="pill pill-light">🏛️ USCIS Interview Prep</span>
+      <h2>Pass your USCIS interview<br /><em>the first time.</em></h2>
+      <p>The interview is one of the most important moments in your immigration journey. I'll make sure you're ready for every question, document, and scenario.</p>
+    </div>
+
+    <div class="uscis-grid">
+      <div class="uscis-card reveal-up">
+        <div class="uc-num">01</div>
+        <h3>Know what to bring</h3>
+        <p>I walk you through every document the officer may ask for — so nothing is missing on the day that matters most.</p>
+      </div>
+      <div class="uscis-card reveal-up" style="--d:.1s">
+        <div class="uc-num">02</div>
+        <h3>Practice the 100 questions</h3>
+        <p>We drill the official civics questions together using proven memory techniques — until your answers feel natural, not rehearsed.</p>
+      </div>
+      <div class="uscis-card reveal-up" style="--d:.2s">
+        <div class="uc-num">03</div>
+        <h3>Master the interview format</h3>
+        <p>Know exactly what to expect — from the moment you enter the building to the final handshake. No surprises.</p>
+      </div>
+      <div class="uscis-card reveal-up" style="--d:.3s">
+        <div class="uc-num">04</div>
+        <h3>Calm your nerves</h3>
+        <p>Anxiety is normal. We use real breathing, grounding, and confidence techniques to keep you composed under pressure.</p>
+      </div>
+      <div class="uscis-card reveal-up" style="--d:.4s">
+        <div class="uc-num">05</div>
+        <h3>Language support</h3>
+        <p>Available in English and Russian. I make sure language is never a barrier to your preparation or your confidence.</p>
+      </div>
+      <div class="uscis-card reveal-up" style="--d:.5s">
+        <div class="uc-num">06</div>
+        <h3>Mock interviews</h3>
+        <p>Full simulated USCIS interviews so you know exactly how it feels — and walk in on the real day feeling like it's your second time.</p>
+      </div>
+    </div>
+
+    <div class="section-cta reveal-up">
+      <a href="#contact" class="btn btn-rose btn-lg">Book your USCIS prep session →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ RECRUITER ADVICE ════════════════════ -->
+<section id="recruiter" class="recruiter-section">
+  <div class="container">
+
+    <div class="section-hd reveal-up">
+      <span class="pill">💼 Recruiter Insider</span>
+      <h2>What recruiters actually<br /><em>want to see.</em></h2>
+      <p>After 15+ years on the hiring side of the table, I know exactly what makes candidates stand out — and what sends them to the "no" pile.</p>
+    </div>
+
+    <div class="advice-grid">
+      <div class="advice-card reveal-up">
+        <div class="advice-icon">🎯</div>
+        <h3>The first 30 seconds matter most</h3>
+        <p>Recruiters form an impression almost immediately. Your opening — how you sit, how you greet, how you start your "tell me about yourself" — sets the entire tone. We script and practice yours until it's effortless.</p>
+      </div>
+      <div class="advice-card reveal-up" style="--d:.1s">
+        <div class="advice-icon">📋</div>
+        <h3>Your resume is a conversation starter</h3>
+        <p>A resume doesn't get you the job — it gets you the interview. I'll help you write one that sparks curiosity, not confusion, and positions your international experience as an asset, not a question mark.</p>
+      </div>
+      <div class="advice-card reveal-up" style="--d:.2s">
+        <div class="advice-icon">🗣️</div>
+        <h3>Silence is not weakness</h3>
+        <p>Many candidates rush to fill silence with filler words. Taking a breath before you answer signals confidence. I'll train you to pause with purpose — a skill that separates good candidates from memorable ones.</p>
+      </div>
+      <div class="advice-card reveal-up" style="--d:.3s">
+        <div class="advice-icon">✉️</div>
+        <h3>Follow-up is a hidden advantage</h3>
+        <p>Most candidates don't send a thoughtful follow-up email. The ones who do stay top of mind. I'll help you craft a thank-you note that keeps you in the conversation — even after you've left the room.</p>
+      </div>
+      <div class="advice-card reveal-up" style="--d:.4s">
+        <div class="advice-icon">🔍</div>
+        <h3>Research like an insider</h3>
+        <p>Knowing the company's mission statement isn't enough. I show you how to find what actually matters to your interviewer — from recent news to team culture — so your answers feel tailored, not generic.</p>
+      </div>
+      <div class="advice-card reveal-up" style="--d:.5s">
+        <div class="advice-icon">💬</div>
+        <h3>Ask better questions</h3>
+        <p>"Do you have any questions for us?" is your final impression. Most candidates waste it. I'll coach you on questions that show strategic thinking and leave interviewers genuinely impressed.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ VIDEOS ════════════════════ -->
+<section id="videos" class="videos-section">
+  <div class="container">
+
+    <div class="section-hd reveal-up">
+      <span class="pill pill-light">▶ Watch & Learn</span>
+      <h2>Free video guides<br /><em>for every step.</em></h2>
+      <p>Practical tips and walkthroughs — completely free. Subscribe to get new videos every week.</p>
+    </div>
+
+    <div class="vtabs reveal-up">
+      <button class="vtab active" data-tab="yt">YouTube</button>
+      <button class="vtab"        data-tab="tt">TikTok</button>
+    </div>
+
+    <!-- YOUTUBE VIDEOS -->
+    <!-- To update: replace VIDEO_ID_1, VIDEO_ID_2, VIDEO_ID_3 with the ID from your YouTube video URL -->
+    <!-- Example: if URL is youtube.com/watch?v=dQw4w9WgXcQ, use dQw4w9WgXcQ -->
+    <div class="video-grid" id="yt-panel">
+      <div class="vcard reveal-up">
+        <div class="vembed">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_1"
+            title="USCIS Interview Tips"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">USCIS Prep</span>
+          <h3>How to Ace Your USCIS Interview</h3>
+          <p>The 10 most common USCIS interview questions — and how to answer them with confidence.</p>
+        </div>
+      </div>
+
+      <div class="vcard reveal-up" style="--d:.1s">
+        <div class="vembed">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_2"
+            title="Job Interview Tips for Immigrants"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">Job Interview</span>
+          <h3>What Recruiters Actually Look For</h3>
+          <p>Inside secrets from 15 years of hiring — what makes a candidate unforgettable.</p>
+        </div>
+      </div>
+
+      <div class="vcard reveal-up" style="--d:.2s">
+        <div class="vembed">
+          <iframe src="https://www.youtube.com/embed/VIDEO_ID_3"
+            title="Resume Tips for Immigrants"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">Resume</span>
+          <h3>Resume Tips for Immigrants</h3>
+          <p>How to present your international experience so U.S. employers truly understand your value.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIKTOK VIDEOS -->
+    <!-- To update: replace TIKTOK_ID_1, TIKTOK_ID_2, TIKTOK_ID_3 with the numeric ID from your TikTok video URL -->
+    <!-- Example: if URL is tiktok.com/@handle/video/1234567890, use 1234567890 -->
+    <div class="video-grid hidden" id="tt-panel">
+      <div class="vcard reveal-up">
+        <div class="vembed ttembed">
+          <iframe src="https://www.tiktok.com/embed/TIKTOK_ID_1"
+            title="USCIS Quick Tips"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">Quick Tip</span>
+          <h3>3 Things USCIS Officers Notice First</h3>
+          <p>60 seconds that could change how you walk into that room.</p>
+        </div>
+      </div>
+
+      <div class="vcard reveal-up" style="--d:.1s">
+        <div class="vembed ttembed">
+          <iframe src="https://www.tiktok.com/embed/TIKTOK_ID_2"
+            title="Job Interview Hack"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">Career</span>
+          <h3>The Follow-Up Email That Gets Responses</h3>
+          <p>Most candidates skip this. Here's the exact template that works.</p>
+        </div>
+      </div>
+
+      <div class="vcard reveal-up" style="--d:.2s">
+        <div class="vembed ttembed">
+          <iframe src="https://www.tiktok.com/embed/TIKTOK_ID_3"
+            title="Confidence Before Interview"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="vmeta">
+          <span class="vtag">Mindset</span>
+          <h3>What to Do the Night Before Your Interview</h3>
+          <p>A recruiter's bedtime routine for interview confidence. It's not what you think.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-cta reveal-up">
+      <!-- Replace YOUR_CHANNEL_HANDLE with your YouTube channel handle (e.g. @OlgaGuideHub) -->
+      <a href="https://www.youtube.com/@YOUR_CHANNEL_HANDLE" target="_blank" rel="noopener" class="btn btn-ghost">
+        See all videos on YouTube →
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section id="about" class="about-section">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-visual reveal-left">
+        <div class="about-frame">
+          <img src="olga.jpg" alt="Olga — Senior Recruiter & Interview Coach" class="about-photo" />
+          <div class="about-quote">
+            <span>💬</span>
+            <p>"I've sat on both sides of the table. Now I make sure you're ready for yours."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-copy reveal-right">
+        <span class="pill">About Olga</span>
+        <h2>I've navigated this path —<br /><em>so you don't have to alone.</em></h2>
+        <p>
+          With over 15 years as a senior recruiter, I've seen thousands of interviews — the ones
+          that go beautifully and the ones that fall apart. I know exactly what the difference is.
+        </p>
+        <p>
+          I created <strong>Olga's GuideHub</strong> because I wanted to bring that insider knowledge
+          directly to the people who need it most: immigrants navigating USCIS, career changers
+          finding their footing, and anyone stepping into a high-stakes conversation feeling
+          underprepared.
+        </p>
+        <p>
+          My sessions are warm, practical, and judgment-free. We work at your pace — whether
+          you need a single session to calm your nerves or ongoing support through a full job search.
+        </p>
+        <ul class="about-checks">
+          <li><span>✦</span> 15+ years senior recruiting experience</li>
+          <li><span>✦</span> Specialized in USCIS interview preparation</li>
+          <li><span>✦</span> Immigrant experience — I understand from the inside</li>
+          <li><span>✦</span> Sessions available in English &amp; Russian</li>
+          <li><span>✦</span> Flexible scheduling — weekdays &amp; evenings</li>
+        </ul>
+        <a href="#contact" class="btn btn-rose">Let's work together →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ TESTIMONIALS ════════════════════ -->
+<section class="testimonials">
+  <div class="container">
+
+    <div class="section-hd reveal-up" style="--c:rgba(255,255,255,.9)">
+      <span class="pill pill-dark">✦ Client Stories</span>
+      <h2 style="color:#fff">What clients are saying</h2>
+      <p style="color:rgba(255,255,255,.7)">Real people. Real results.</p>
+    </div>
+
+    <div class="tgrid">
+      <div class="tcard reveal-up">
+        <div class="tstars">⭐⭐⭐⭐⭐</div>
+        <p>"Olga helped me prepare for my USCIS interview in just two sessions. I passed on the very first try. She's patient, incredibly thorough, and genuinely cares about your success."</p>
+        <div class="tauthor">
+          <div class="tavatar">M</div>
+          <div>
+            <strong>Maria S.</strong>
+            <small>Citizenship Interview — Passed ✅</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal-up" style="--d:.1s">
+        <div class="tstars">⭐⭐⭐⭐⭐</div>
+        <p>"I moved from Ukraine with no idea how the U.S. job market worked. After working with Olga, I had three interviews in my first week and an offer by the end of the month."</p>
+        <div class="tauthor">
+          <div class="tavatar">A</div>
+          <div>
+            <strong>Anna P.</strong>
+            <small>Job Seeker — Hired in 4 weeks</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard reveal-up" style="--d:.2s">
+        <div class="tstars">⭐⭐⭐⭐⭐</div>
+        <p>"I was terrified walking into my green card interview. Olga did a full mock session with me the day before. I walked in feeling like it was the second time — and it showed. Approved same day."</p>
+        <div class="tauthor">
+          <div class="tavatar">D</div>
+          <div>
+            <strong>David R.</strong>
+            <small>Green Card Interview — Approved ✅</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ CONTACT ════════════════════ -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-info reveal-left">
+        <span class="pill">Get in Touch</span>
+        <h2>You don't have to do<br /><em>this alone.</em></h2>
+        <p>
+          Whether you're weeks away from your USCIS interview, starting a job search, or
+          just want to talk through what's ahead — reach out. First conversation is always free.
+        </p>
+
+        <div class="cta-booking">
+          <div class="booking-card">
+            <span class="booking-icon">📅</span>
+            <div>
+              <strong>Book a free 20-minute call</strong>
+              <p>
+                I recommend <a href="https://calendly.com" target="_blank" rel="noopener">Calendly</a>
+                for easy scheduling. Add your Calendly link here when ready — it's free to set up
+                at <em>calendly.com</em>.
+              </p>
+              <!-- Replace # below with your actual Calendly link when you have one -->
+              <!-- Example: href="https://calendly.com/olgaguidehub/30min" -->
+              <a href="#" class="btn btn-rose" style="margin-top:.75rem">Book a call →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-ways">
+          <div class="cway">
+            <span>📧</span>
+            <div>
+              <strong>Email</strong>
+              <!-- Replace with your actual email -->
+              <a href="mailto:olga@olgasguidehub.com">olga@olgasguidehub.com</a>
+            </div>
+          </div>
+          <div class="cway">
+            <span>⏱️</span>
+            <div>
+              <strong>Response time</strong>
+              <span>Within 24–48 hours</span>
+            </div>
+          </div>
+          <div class="cway social-cway">
+            <span>📱</span>
+            <div>
+              <strong>Follow along</strong>
+              <div class="social-pills">
+                <!-- Replace YOUR_CHANNEL_HANDLE with your YouTube handle -->
+                <a href="https://www.youtube.com/@YOUR_CHANNEL_HANDLE" target="_blank" rel="noopener" class="spill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  YouTube
+                </a>
+                <!-- Add your TikTok handle when ready — replace YOUR_TIKTOK_HANDLE -->
+                <a href="https://www.tiktok.com/@YOUR_TIKTOK_HANDLE" target="_blank" rel="noopener" class="spill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.35 6.35 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.77 1.52V6.7a4.85 4.85 0 0 1-1-.01z"/></svg>
+                  TikTok
+                </a>
+                <!-- Add your Instagram handle when ready -->
+                <a href="https://www.instagram.com/YOUR_IG_HANDLE" target="_blank" rel="noopener" class="spill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  Instagram
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-col reveal-right">
+        <form class="cform" id="contactForm" novalidate>
+          <h3>Send a message</h3>
+          <div class="frow">
+            <div class="fgroup">
+              <label for="fn">First name</label>
+              <input type="text" id="fn" name="firstName" placeholder="Maria" autocomplete="given-name" required />
+            </div>
+            <div class="fgroup">
+              <label for="ln">Last name</label>
+              <input type="text" id="ln" name="lastName" placeholder="Smith" autocomplete="family-name" required />
+            </div>
+          </div>
+          <div class="fgroup">
+            <label for="em">Email address</label>
+            <input type="email" id="em" name="email" placeholder="you@email.com" autocomplete="email" required />
+          </div>
+          <div class="fgroup">
+            <label for="tp">I need help with</label>
+            <select id="tp" name="topic">
+              <option value="">Select a topic…</option>
+              <option value="uscis">USCIS Interview Preparation</option>
+              <option value="job">Job Interview Coaching</option>
+              <option value="resume">Resume &amp; Career</option>
+              <option value="other">Something else</option>
+            </select>
+          </div>
+          <div class="fgroup">
+            <label for="msg">Your message</label>
+            <textarea id="msg" name="message" rows="4" placeholder="Tell me a little about where you are and how I can help…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-rose btn-full">Send message →</button>
+          <p class="fdisclaim">100% private. I never share your information.</p>
+        </form>
+
+        <div class="form-sent hidden" id="formSent">
+          <span class="sent-ico">🎉</span>
+          <h3>Message received!</h3>
+          <p>Thank you for reaching out, I'll reply within 24–48 hours. Talk soon!</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="fcol fcol-brand">
+        <a href="#home" class="brand brand-light">
+          <span class="brand-mark">✦</span>
+          <span>Olga's <strong>GuideHub</strong></span>
+        </a>
+        <p>A warm, supportive space for interview preparation, USCIS coaching, and career transitions. 15+ years of recruiting experience — here to help you succeed.</p>
+        <div class="footer-social">
+          <a href="https://www.youtube.com/@YOUR_CHANNEL_HANDLE" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@YOUR_TIKTOK_HANDLE" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.35 6.35 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.67a8.18 8.18 0 0 0 4.77 1.52V6.7a4.85 4.85 0 0 1-1-.01z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/YOUR_IG_HANDLE" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="fcol">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#uscis">USCIS Interview Prep</a></li>
+          <li><a href="#recruiter">Job Interview Coaching</a></li>
+          <li><a href="#recruiter">Resume Review</a></li>
+          <li><a href="#contact">Career Transitions</a></li>
+        </ul>
+      </div>
+
+      <div class="fcol">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About Olga</a></li>
+          <li><a href="#videos">Free Videos</a></li>
+          <li><a href="#contact">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Olga's GuideHub. All rights reserved.</p>
+      <p>Made with care for immigrants everywhere. 🌸</p>
+    </div>
   </div>
 </footer>
 
-<script>
-  // ── Scroll-triggered fade-in ──
-  const observer = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    { threshold: 0.15 }
-  );
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Kick off hero immediately
-  document.querySelector('#hero .fade-in').classList.add('visible');
-
-  // ── Mouse-glow on hero ──
-  const hero    = document.getElementById('hero');
-  const overlay = document.getElementById('hero-overlay');
-  hero.addEventListener('mousemove', e => {
-    const r = hero.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    overlay.style.background =
-      `radial-gradient(circle 200px at ${x}px ${y}px, rgba(203,184,157,.07), transparent)`;
-  });
-  hero.addEventListener('mouseleave', () => { overlay.style.background = 'none'; });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
