@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 50" role="img" aria-label="Olga's GuideHub">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;display=swap');
+      .logo-small { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 11px; font-weight: 400; fill: #7A5568; letter-spacing: 1.5px; }
+      .logo-main  { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 700; fill: #5C3357; letter-spacing: 0.3px; }
+    </style>
+  </defs>
+
+  <!-- North star / compass rose icon (50×50 canvas, center 25,25) -->
+  <!-- Outer 4 points: N/S tall (±18px), E/W wide (±14px) -->
+  <!-- Inner 4 points at 45° (~7px from center) -->
+  <path d="M25,7 L29,20 L39,25 L29,30 L25,43 L21,30 L11,25 L21,20 Z"
+        fill="#C4789A"/>
+
+  <!-- Soft inner glow ring -->
+  <circle cx="25" cy="25" r="6" fill="#FDF0F6" opacity="0.6"/>
+
+  <!-- Plum center dot -->
+  <circle cx="25" cy="25" r="3.2" fill="#5C3357"/>
+
+  <!-- Text: "OLGA'S" small caps above, "GuideHub" bold below -->
+  <text x="58" y="20" class="logo-small">OLGA'S</text>
+  <text x="57" y="41" class="logo-main">GuideHub</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Olga's GuideHub icon">
+
+  <!-- Plum circle background -->
+  <circle cx="400" cy="400" r="400" fill="#5C3357"/>
+
+  <!-- Subtle inner gradient ring for depth -->
+  <circle cx="400" cy="400" r="340" fill="none" stroke="#7A4070" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- North star — rose, center 400,400 -->
+  <!-- N/S: ±250px tall, E/W: ±190px wide, inner at ±58px at 45° -->
+  <path d="M400,150 L458,342 L610,400 L458,458 L400,650 L342,458 L190,400 L342,342 Z"
+        fill="#C4789A"/>
+
+  <!-- Ivory inner circle accent -->
+  <circle cx="400" cy="400" r="52" fill="#FDF0F6" opacity="0.92"/>
+
+  <!-- Plum center dot -->
+  <circle cx="400" cy="400" r="22" fill="#5C3357"/>
+
+  <!-- Four tiny rose diamond accents between the star points (optional elegance) -->
+  <rect x="396" y="96"  width="8" height="8" rx="2" fill="#F0C6D8" opacity="0.7" transform="rotate(45 400 100)"/>
+  <rect x="396" y="692" width="8" height="8" rx="2" fill="#F0C6D8" opacity="0.7" transform="rotate(45 400 696)"/>
+  <rect x="96"  y="396" width="8" height="8" rx="2" fill="#F0C6D8" opacity="0.7" transform="rotate(45 100 400)"/>
+  <rect x="692" y="396" width="8" height="8" rx="2" fill="#F0C6D8" opacity="0.7" transform="rotate(45 696 400)"/>
+
+</svg>
