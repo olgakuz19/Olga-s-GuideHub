@@ -548,6 +548,36 @@ strong { color: var(--text); font-weight: 600; }
   border: none;
 }
 .ttembed { padding-top: 177.78%; /* 9:16 TikTok */ }
+
+/* Shorts thumbnail cards */
+.vthumb-link { display: block; text-decoration: none; }
+.vthumb {
+  position: relative;
+  padding-top: 177.78%; /* 9:16 portrait */
+  background: #111;
+  overflow: hidden;
+}
+.vthumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+.vthumb-link:hover .vthumb img { transform: scale(1.04); }
+.vplay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.15);
+  transition: background .2s;
+}
+.vthumb-link:hover .vplay { background: rgba(0,0,0,.3); }
+.vplay svg { filter: drop-shadow(0 2px 6px rgba(0,0,0,.5)); }
+
 .vmeta { padding: 1.25rem; }
 .vtag {
   display: inline-block;
