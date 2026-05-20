@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Olga's GuideHub icon">
 
   <!-- Plum circle background -->
-  <circle cx="400" cy="400" r="400" fill="#5C3357"/>
+  <circle cx="400" cy="400" r="400" fill="#C4789A"/>
 
   <!-- Subtle inner gradient ring for depth -->
   <circle cx="400" cy="400" r="340" fill="none" stroke="#7A4070" stroke-width="1.5" opacity="0.4"/>
@@ -9,7 +9,7 @@
   <!-- North star — rose, center 400,400 -->
   <!-- N/S: ±250px tall, E/W: ±190px wide, inner at ±58px at 45° -->
   <path d="M400,150 L458,342 L610,400 L458,458 L400,650 L342,458 L190,400 L342,342 Z"
-        fill="#C4789A"/>
+        fill="#FDF8F5"/>
 
   <!-- Ivory inner circle accent -->
   <circle cx="400" cy="400" r="52" fill="#FDF0F6" opacity="0.92"/>
