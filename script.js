@@ -97,9 +97,10 @@ document.querySelectorAll('.vtab').forEach(btn => {
   });
 });
 
-/* ── Contact form ── */
+/* ── Contact form — sends via FormSubmit.co to olga@olgaguidehub.com ── */
 const contactForm = document.getElementById('contactForm');
 const formSent    = document.getElementById('formSent');
+const formError   = document.getElementById('formError');
 
 if (contactForm) {
   contactForm.addEventListener('submit', e => {
@@ -110,20 +111,33 @@ if (contactForm) {
     const orig = btn.textContent;
     btn.textContent = 'Sending…';
     btn.disabled = true;
+    formError.classList.add('hidden');
 
-    // ── Swap this setTimeout for a real fetch() to Formspree / EmailJS ──
-    // Example with Formspree:
-    //   fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //     method: 'POST',
-    //     body: new FormData(contactForm),
-    //     headers: { Accept: 'application/json' }
-    //   }).then(() => showSuccess()).catch(() => { btn.textContent = orig; btn.disabled = false; });
-    setTimeout(() => {
-      contactForm.classList.add('hidden');
-      formSent.classList.remove('hidden');
-    }, 1100);
+    fetch('https://formsubmit.co/ajax/olga@olgaguidehub.com', {
+      method: 'POST',
+      body: new FormData(contactForm),
+      headers: { Accept: 'application/json' }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('send failed');
+        contactForm.classList.add('hidden');
+        formSent.classList.remove('hidden');
+      })
+      .catch(() => {
+        btn.textContent = orig;
+        btn.disabled = false;
+        formError.classList.remove('hidden');
+      });
   });
 }
+
+/* ── FAQ accordion — close others when one opens ── */
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach(item => {
+  item.addEventListener('toggle', () => {
+    if (item.open) faqItems.forEach(other => { if (other !== item) other.open = false; });
+  });
+});
 
 /* ── Subtle hero parallax (respects prefers-reduced-motion) ── */
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
