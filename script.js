@@ -200,6 +200,70 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   }
 }
 
+/* ── Scroll journey line: dotted path + star that travels as you scroll ── */
+const journeySvg = document.getElementById('journeyLine');
+
+if (journeySvg && !prefersReducedMotion && window.innerWidth > 960) {
+  const NS = 'http://www.w3.org/2000/svg';
+  const ahead = document.createElementNS(NS, 'path');
+  const done  = document.createElementNS(NS, 'path');
+  const star  = document.createElementNS(NS, 'path');
+  ahead.setAttribute('class', 'j-ahead');
+  done.setAttribute('class', 'j-done');
+  star.setAttribute('class', 'j-star');
+  star.setAttribute('d', 'M0,-11 C1.5,-3 3,-1.5 11,0 C3,1.5 1.5,3 0,11 C-1.5,3 -3,1.5 -11,0 C-3,-1.5 -1.5,-3 0,-11Z');
+  journeySvg.append(ahead, done, star);
+
+  let pathLen = 0, firstY = 0, lastY = 0;
+
+  function buildJourney() {
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.scrollHeight;
+    journeySvg.setAttribute('width', w);
+    journeySvg.setAttribute('height', h);
+    journeySvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+    const stops = ['coaching', 'insider', 'videos', 'about', 'stories', 'faq', 'contact']
+      .map(id => document.getElementById(id))
+      .filter(Boolean)
+      .map((sec, i) => ({
+        x: w * (i % 2 === 0 ? 0.085 : 0.915),
+        y: sec.offsetTop + sec.offsetHeight * 0.5
+      }));
+    if (stops.length < 2) return;
+
+    let d = `M ${stops[0].x} ${stops[0].y}`;
+    for (let i = 1; i < stops.length; i++) {
+      const midY = (stops[i - 1].y + stops[i].y) / 2;
+      d += ` C ${stops[i - 1].x} ${midY}, ${stops[i].x} ${midY}, ${stops[i].x} ${stops[i].y}`;
+    }
+    ahead.setAttribute('d', d);
+    done.setAttribute('d', d);
+
+    pathLen = done.getTotalLength();
+    firstY = stops[0].y;
+    lastY = stops[stops.length - 1].y;
+    done.style.strokeDasharray = pathLen;
+    drawJourney();
+  }
+
+  function drawJourney() {
+    if (!pathLen) return;
+    const focus = window.scrollY + window.innerHeight * 0.55;
+    const p = Math.min(Math.max((focus - firstY) / (lastY - firstY), 0), 1);
+    done.style.strokeDashoffset = pathLen * (1 - p);
+    const pt = done.getPointAtLength(pathLen * p);
+    const ahead2 = done.getPointAtLength(Math.min(pathLen * p + 2, pathLen));
+    const angle = Math.atan2(ahead2.y - pt.y, ahead2.x - pt.x) * 180 / Math.PI;
+    star.setAttribute('transform', `translate(${pt.x}, ${pt.y}) rotate(${angle * 0.15})`);
+  }
+
+  window.addEventListener('scroll', drawJourney, { passive: true });
+  window.addEventListener('resize', () => requestAnimationFrame(buildJourney));
+  window.addEventListener('load', buildJourney);
+  buildJourney();
+}
+
 /* ── Keyboard: close mobile menu on Escape ── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMobileMenu();

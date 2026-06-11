@@ -79,6 +79,8 @@ strong { color: var(--text); font-weight: 600; }
 .container {
   width: min(var(--max-w), 100% - 2.5rem);
   margin-inline: auto;
+  position: relative;
+  z-index: 1;
 }
 .hidden { display: none !important; }
 
@@ -1135,6 +1137,38 @@ strong { color: var(--text); font-weight: 600; }
   border: 3px solid var(--ivory);
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--rose); }
+
+/* Scroll journey line */
+.journey {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.journey .j-ahead {
+  fill: none;
+  stroke: var(--rose);
+  stroke-opacity: .22;
+  stroke-width: 2;
+  stroke-dasharray: 2 9;
+  stroke-linecap: round;
+}
+.journey .j-done {
+  fill: none;
+  stroke: var(--rose);
+  stroke-opacity: .55;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.journey .j-star {
+  fill: var(--rose);
+  filter: drop-shadow(0 0 6px rgba(196,120,154,.65));
+}
+@media (max-width: 960px), (prefers-reduced-motion: reduce) {
+  .journey { display: none; }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .hero::before { animation: blob-a 18s ease-in-out infinite alternate; }
