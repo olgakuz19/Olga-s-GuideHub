@@ -139,6 +139,57 @@ faqItems.forEach(item => {
   });
 });
 
+/* ── Trust numbers count up when scrolled into view ── */
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const trustNums = document.querySelectorAll('.trust-n');
+
+if (trustNums.length && !prefersReducedMotion) {
+  const countObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      countObs.unobserve(entry.target);
+      const el = entry.target;
+      const m = el.textContent.trim().match(/^(\d+)(.*)$/);
+      if (!m) return;
+      const target = +m[1], suffix = m[2], dur = 1400, t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+  trustNums.forEach(el => countObs.observe(el));
+}
+
+/* ── Hero: 3D photo tilt + cursor glow (desktop, motion-safe only) ── */
+if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+  const hero = document.querySelector('.hero');
+  const frame = document.querySelector('.hero-frame');
+  const glow = document.querySelector('.hero-glow');
+
+  if (hero && frame && glow) {
+    hero.addEventListener('mousemove', e => {
+      const r = frame.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      const clamp = v => Math.max(-0.6, Math.min(0.6, v));
+      frame.style.transform = `rotateY(${clamp(dx) * 9}deg) rotateX(${-clamp(dy) * 9}deg)`;
+
+      const hr = hero.getBoundingClientRect();
+      glow.style.left = (e.clientX - hr.left) + 'px';
+      glow.style.top = (e.clientY - hr.top) + 'px';
+      glow.classList.add('on');
+    });
+    hero.addEventListener('mouseleave', () => {
+      frame.style.transform = '';
+      glow.classList.remove('on');
+    });
+  }
+}
+
 /* ── Subtle hero parallax (respects prefers-reduced-motion) ── */
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const heroVisual = document.querySelector('.hero-visual');
