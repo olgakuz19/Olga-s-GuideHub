@@ -719,6 +719,18 @@ strong { color: var(--text); font-weight: 600; }
 .tauthor strong { color: var(--white); font-size: .88rem; }
 .tauthor small  { color: rgba(255,255,255,.55); font-size: .75rem; }
 
+/* Olga-voice client stories */
+.testimonials .section-hd p { color: rgba(255,255,255,.65); }
+.story-ico { font-size: 1.6rem; display: block; margin-bottom: .9rem; }
+.tcard.story > p { font-style: normal; margin-bottom: 1.2rem; }
+.story-tag {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--rose-light);
+}
+
 /* ═══════════════════════════════════════════════════════════
    FAQ
 ═══════════════════════════════════════════════════════════ */
