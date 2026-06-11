@@ -67,8 +67,8 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 input, textarea, select { font: inherit; }
 
 /* ── Type scale ── */
-h1 { font-family: var(--serif); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; line-height: 1.12; letter-spacing: -0.015em; }
-h2 { font-family: var(--serif); font-size: clamp(1.65rem, 3.5vw, 2.55rem); font-weight: 600; line-height: 1.18; letter-spacing: -0.01em; }
+h1 { font-family: var(--serif); font-size: clamp(2.1rem, 5.5vw, 3.9rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; }
+h2 { font-family: var(--serif); font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 600; line-height: 1.14; letter-spacing: -0.015em; }
 h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
 h4 { font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
 em { font-style: italic; color: var(--rose); }
@@ -426,6 +426,24 @@ strong { color: var(--text); font-weight: 600; }
 .svc-ico { font-size: 1.9rem; margin-bottom: .9rem; }
 .svc-card h3 { font-size: .97rem; margin-bottom: .45rem; }
 .svc-card p  { font-size: .86rem; }
+.svc-out {
+  margin-top: 1rem;
+  padding-top: .85rem;
+  border-top: 1px dashed var(--border);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--plum);
+  line-height: 1.45;
+}
+.svc-out span {
+  display: block;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: .2rem;
+}
 
 /* ═══════════════════════════════════════════════════════════
    USCIS SECTION
