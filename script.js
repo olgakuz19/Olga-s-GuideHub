@@ -7,9 +7,17 @@ const navbar   = document.getElementById('navbar');
 const sections = [...document.querySelectorAll('section[id], header[id]')];
 const navLinks = document.querySelectorAll('a.nl[href^="#"]');
 
+const floatCta = document.getElementById('floatCta');
+const contactSection = document.getElementById('contact');
+
 function onScroll() {
   navbar.classList.toggle('stuck', window.scrollY > 30);
   highlightNav();
+  if (floatCta) {
+    const nearContact = contactSection &&
+      window.scrollY + window.innerHeight > contactSection.offsetTop + 150;
+    floatCta.classList.toggle('show', window.scrollY > 650 && !nearContact);
+  }
 }
 
 function highlightNav() {
