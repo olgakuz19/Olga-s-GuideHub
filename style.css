@@ -431,7 +431,7 @@ strong { color: var(--text); font-weight: 600; }
    USCIS SECTION
 ═══════════════════════════════════════════════════════════ */
 .uscis-section {
-  background: linear-gradient(145deg, var(--plum-dark) 0%, var(--plum-deeper) 100%);
+  background: linear-gradient(165deg, var(--ivory-alt) 0%, var(--ivory) 60%, #FBEFF7 100%);
   padding-block: clamp(5.5rem, 9vw, 7rem);
   position: relative;
   overflow: hidden;
@@ -441,12 +441,10 @@ strong { color: var(--text); font-weight: 600; }
   position: absolute;
   top: -200px; right: -200px;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(196,120,154,.12) 0%, transparent 68%);
+  background: radial-gradient(circle, rgba(196,120,154,.10) 0%, transparent 68%);
   border-radius: 50%;
   pointer-events: none;
 }
-.uscis-section .section-hd h2 { color: var(--white); }
-.uscis-section .section-hd p  { color: rgba(255,255,255,.65); }
 
 .uscis-grid {
   display: grid;
@@ -454,28 +452,27 @@ strong { color: var(--text); font-weight: 600; }
   gap: 1.25rem;
 }
 .uscis-card {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
+  background: var(--white);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
   padding: 1.75rem;
-  backdrop-filter: blur(6px);
-  transition: background var(--t), transform var(--t) var(--ease);
+  transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease), border-color var(--t);
 }
 .uscis-card:hover {
-  background: rgba(255,255,255,.1);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--rose-light);
 }
 .uc-num {
   font-family: var(--serif);
   font-size: 2.25rem;
   font-weight: 700;
-  color: var(--rose);
-  opacity: .7;
+  color: var(--rose-light);
   line-height: 1;
   margin-bottom: .75rem;
 }
-.uscis-card h3 { color: var(--white); font-size: 1rem; margin-bottom: .5rem; }
-.uscis-card p  { color: rgba(255,255,255,.62); font-size: .88rem; }
+.uscis-card h3 { color: var(--text); font-size: 1rem; margin-bottom: .5rem; }
+.uscis-card p  { color: var(--text-muted); font-size: .88rem; }
 
 /* ═══════════════════════════════════════════════════════════
    RECRUITER ADVICE
