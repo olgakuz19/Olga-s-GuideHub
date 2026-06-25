@@ -1,10 +1,10 @@
-{
+﻿{
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "guidehub",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-p", "3456", "."],
+      "name": "olgasguidehub",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3456"],
       "port": 3456
     }
   ]
