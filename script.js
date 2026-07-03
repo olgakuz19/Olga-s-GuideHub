@@ -316,7 +316,7 @@ function qzSample() {
   });
 }
 
-const QUIZ_TIME = 60;
+const QUIZ_TIME = 30;
 const qzStart = document.getElementById('qzStart');
 const qzPlay = document.getElementById('qzPlay');
 const qzEnd = document.getElementById('qzEnd');
@@ -334,14 +334,10 @@ if (qzStart && qzPlay && qzEnd) {
 
   function startQuiz() {
     quiz = qzSample();
-    idx = 0; score = 0; timeLeft = QUIZ_TIME; picks = []; locked = false; done = false;
+    idx = 0; score = 0; picks = []; locked = false; done = false;
     qzStart.classList.add('hidden');
     qzEnd.classList.add('hidden');
     qzPlay.classList.remove('hidden');
-    qzClock.textContent = timeLeft;
-    qzClock.classList.remove('low');
-    qzBar.style.width = '100%';
-    timer = setInterval(tick, 1000);
     showQuestion();
   }
 
@@ -349,11 +345,38 @@ if (qzStart && qzPlay && qzEnd) {
     timeLeft--;
     qzClock.textContent = Math.max(timeLeft, 0);
     qzBar.style.width = (Math.max(timeLeft, 0) / QUIZ_TIME * 100) + '%';
-    if (timeLeft <= 10) qzClock.classList.add('low');
-    if (timeLeft <= 0) finish(false);
+    if (timeLeft <= 8) qzClock.classList.add('low');
+    if (timeLeft <= 0) timeUp();
+  }
+
+  function timeUp() {
+    clearInterval(timer);
+    if (locked || done) return;
+    locked = true;
+    picks.push(-1);
+    qzA.children[quiz[idx].correct].classList.add('good');
+    advance();
+  }
+
+  function advance() {
+    setTimeout(() => {
+      if (done) return;
+      idx++;
+      if (idx >= quiz.length) finish();
+      else showQuestion();
+    }, 900);
   }
 
   function showQuestion() {
+    clearInterval(timer);
+    timeLeft = QUIZ_TIME;
+    qzClock.textContent = timeLeft;
+    qzClock.classList.remove('low');
+    qzBar.style.transition = 'none';
+    qzBar.style.width = '100%';
+    void qzBar.offsetWidth;
+    qzBar.style.transition = '';
+    timer = setInterval(tick, 1000);
     const item = quiz[idx];
     qzCount.textContent = 'Question ' + (idx + 1) + ' of ' + quiz.length;
     qzQ.textContent = item.q;
@@ -372,6 +395,7 @@ if (qzStart && qzPlay && qzEnd) {
   function pick(i, btn) {
     if (locked) return;
     locked = true;
+    clearInterval(timer);
     const item = quiz[idx];
     picks.push(i);
     if (i === item.correct) { score++; btn.classList.add('good'); }
@@ -379,15 +403,10 @@ if (qzStart && qzPlay && qzEnd) {
       btn.classList.add('bad');
       qzA.children[item.correct].classList.add('good');
     }
-    setTimeout(() => {
-      if (done) return;
-      idx++;
-      if (idx >= quiz.length) finish(true);
-      else showQuestion();
-    }, 650);
+    advance();
   }
 
-  function finish(inTime) {
+  function finish() {
     if (done) return;
     done = true;
     clearInterval(timer);
@@ -395,10 +414,7 @@ if (qzStart && qzPlay && qzEnd) {
     qzEnd.classList.remove('hidden');
 
     let headline, sub;
-    if (!inTime) {
-      headline = '⏰ Time is up!';
-      sub = 'The real interview will not rush you like this, promise. Want another try?';
-    } else if (score === quiz.length) {
+    if (score === quiz.length) {
       headline = '🎉 ' + score + ' out of ' + quiz.length + '. Officer level calm!';
       sub = 'You clearly did your homework. Imagine how ready you will feel after we prep together.';
     } else if (score >= 4) {
@@ -411,15 +427,13 @@ if (qzStart && qzPlay && qzEnd) {
 
     let html = '<div class="qz-score">' + headline + '</div><p>' + sub + '</p>';
 
-    if (inTime) {
-      html += '<ul class="qz-review">';
-      quiz.forEach((item, i) => {
-        const ok = picks[i] === item.correct;
-        html += '<li class="' + (ok ? 'ok' : 'miss') + '"><strong>' + item.q + '</strong><br>' + item.why + '</li>';
-      });
-      html += '</ul>';
-      html += '<a href="#contact" class="btn btn-rose btn-lg">Book your session</a> ';
-    }
+    html += '<ul class="qz-review">';
+    quiz.forEach((item, i) => {
+      const ok = picks[i] === item.correct;
+      html += '<li class="' + (ok ? 'ok' : 'miss') + '"><strong>' + item.q + '</strong><br>' + item.why + '</li>';
+    });
+    html += '</ul>';
+    html += '<a href="#contact" class="btn btn-rose btn-lg">Book your session</a> ';
     html += '<button type="button" class="btn btn-ghost" id="qzRetry">Try again</button>';
 
     qzEnd.innerHTML = html;
