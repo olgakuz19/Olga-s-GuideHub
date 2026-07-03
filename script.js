@@ -172,7 +172,7 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
 }
 
 /* ── USCIS Interview Readiness Quiz ── */
-const QUIZ = [
+const QUIZ_POOL = [
   {
     q: 'The officer asks: "How did you and your spouse meet?" What is the best way to answer?',
     a: [
@@ -192,16 +192,6 @@ const QUIZ = [
     ],
     correct: 2,
     why: 'Accuracy beats speed. Checking your documents is completely allowed.'
-  },
-  {
-    q: 'In 2026 many field offices interview married couples in a new way. Which one?',
-    a: [
-      'Spouses are interviewed separately and their answers are compared',
-      'Spouses are always interviewed together in one room',
-      'Spouse interviews were cancelled'
-    ],
-    correct: 0,
-    why: 'Separate interviews are the new normal, so honesty and consistency matter more than ever.'
   },
   {
     q: 'The officer asks something you did not understand. What now?',
@@ -232,8 +222,99 @@ const QUIZ = [
     ],
     correct: 1,
     why: 'An organized folder can save your interview when a surprise question comes up.'
+  },
+  {
+    q: 'Your interview is at 10:00. When do you arrive at the building?',
+    a: [
+      'At 10:00 exactly, right on time',
+      'About 30 minutes early, security lines take time',
+      'Whenever works, they will wait for you'
+    ],
+    correct: 1,
+    why: 'Arriving early leaves time for security and check in, so you walk in calm instead of stressed.'
+  },
+  {
+    q: 'Your English is not strong yet. What is the right move?',
+    a: [
+      'Struggle through and hope for the best',
+      'Arrange a qualified interpreter ahead of time if your case allows one',
+      'Have your spouse quietly translate for you'
+    ],
+    correct: 1,
+    why: 'Interpreters are a normal part of many interviews. Arrange it properly in advance, do not improvise.'
+  },
+  {
+    q: 'You notice a mistake in your application before the interview. What do you do?',
+    a: [
+      'Hope the officer does not see it',
+      'Tell the officer about it and bring the correct information',
+      'Deny it if asked'
+    ],
+    correct: 1,
+    why: 'Officers respect corrections. Hiding a mistake looks like misrepresentation, and that is far worse.'
+  },
+  {
+    q: 'You moved to a new apartment after filing. What about the interview?',
+    a: [
+      'Give the old address, it matches the file',
+      'Report the move and bring proof of your new address',
+      'Addresses do not really matter'
+    ],
+    correct: 1,
+    why: 'You must keep USCIS updated when you move, and bringing proof shows you take the process seriously.'
+  },
+  {
+    q: 'A truthful answer feels unfavorable for your case. What do you say?',
+    a: [
+      'The truth, calmly and clearly',
+      'A better sounding version of events',
+      'Nothing, just smile'
+    ],
+    correct: 0,
+    why: 'One uncomfortable truth rarely sinks a case. Misrepresentation can, and it follows you forever.'
+  },
+  {
+    q: 'Since filing, you have new pay stubs and a joint bank account. Bring them?',
+    a: [
+      'No, only what you already filed counts',
+      'Yes, updated documents strengthen your file',
+      'Only if the officer asks you in advance'
+    ],
+    correct: 1,
+    why: 'Fresh evidence shows your life today, and officers appreciate an updated, organized file.'
+  },
+  {
+    q: 'You freeze from nerves in the middle of an answer. What now?',
+    a: [
+      'Keep talking fast to cover it',
+      'Pause, take a breath, and continue when ready',
+      'Apologize repeatedly and rush through'
+    ],
+    correct: 1,
+    why: 'Officers see nervous people every day. A calm pause reads as thoughtful, not suspicious.'
   }
 ];
+
+function qzShuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function qzSample() {
+  return qzShuffle(QUIZ_POOL).slice(0, 6).map(item => {
+    const order = qzShuffle(item.a.map((_, i) => i));
+    return {
+      q: item.q,
+      a: order.map(i => item.a[i]),
+      correct: order.indexOf(item.correct),
+      why: item.why
+    };
+  });
+}
 
 const QUIZ_TIME = 60;
 const qzStart = document.getElementById('qzStart');
@@ -247,11 +328,12 @@ if (qzStart && qzPlay && qzEnd) {
   const qzClock = document.getElementById('qzClock');
   const qzBar = document.getElementById('qzBar');
 
-  let idx = 0, score = 0, timeLeft = QUIZ_TIME, timer = null, picks = [], locked = false, done = false;
+  let quiz = [], idx = 0, score = 0, timeLeft = QUIZ_TIME, timer = null, picks = [], locked = false, done = false;
 
   document.getElementById('qzStartBtn').addEventListener('click', startQuiz);
 
   function startQuiz() {
+    quiz = qzSample();
     idx = 0; score = 0; timeLeft = QUIZ_TIME; picks = []; locked = false; done = false;
     qzStart.classList.add('hidden');
     qzEnd.classList.add('hidden');
@@ -272,8 +354,8 @@ if (qzStart && qzPlay && qzEnd) {
   }
 
   function showQuestion() {
-    const item = QUIZ[idx];
-    qzCount.textContent = 'Question ' + (idx + 1) + ' of ' + QUIZ.length;
+    const item = quiz[idx];
+    qzCount.textContent = 'Question ' + (idx + 1) + ' of ' + quiz.length;
     qzQ.textContent = item.q;
     qzA.innerHTML = '';
     locked = false;
@@ -290,7 +372,7 @@ if (qzStart && qzPlay && qzEnd) {
   function pick(i, btn) {
     if (locked) return;
     locked = true;
-    const item = QUIZ[idx];
+    const item = quiz[idx];
     picks.push(i);
     if (i === item.correct) { score++; btn.classList.add('good'); }
     else {
@@ -300,7 +382,7 @@ if (qzStart && qzPlay && qzEnd) {
     setTimeout(() => {
       if (done) return;
       idx++;
-      if (idx >= QUIZ.length) finish(true);
+      if (idx >= quiz.length) finish(true);
       else showQuestion();
     }, 650);
   }
@@ -316,25 +398,22 @@ if (qzStart && qzPlay && qzEnd) {
     if (!inTime) {
       headline = '⏰ Time is up!';
       sub = 'The real interview will not rush you like this, promise. Want another try?';
-    } else if (score === QUIZ.length) {
-      headline = '🎉 ' + score + ' out of ' + QUIZ.length + '. Officer level calm!';
+    } else if (score === quiz.length) {
+      headline = '🎉 ' + score + ' out of ' + quiz.length + '. Officer level calm!';
       sub = 'You clearly did your homework. Imagine how ready you will feel after we prep together.';
     } else if (score >= 4) {
-      headline = '💪 ' + score + ' out of ' + QUIZ.length + '. Almost there!';
+      headline = '💪 ' + score + ' out of ' + quiz.length + '. Almost there!';
       sub = 'A strong result. The last details are exactly what we polish in a coaching session.';
     } else {
-      headline = '🌱 ' + score + ' out of ' + QUIZ.length + '. Good start!';
+      headline = '🌱 ' + score + ' out of ' + quiz.length + '. Good start!';
       sub = 'Most people score here before preparing. That is exactly why preparation works.';
     }
 
     let html = '<div class="qz-score">' + headline + '</div><p>' + sub + '</p>';
 
     if (inTime) {
-      html += '<div class="qz-reward">🎁 You finished the 60 second challenge!' +
-        '<strong>READY10</strong>' +
-        'Mention this code when you book and get 10% off your 30 minute session.</div>';
       html += '<ul class="qz-review">';
-      QUIZ.forEach((item, i) => {
+      quiz.forEach((item, i) => {
         const ok = picks[i] === item.correct;
         html += '<li class="' + (ok ? 'ok' : 'miss') + '"><strong>' + item.q + '</strong><br>' + item.why + '</li>';
       });

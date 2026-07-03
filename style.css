@@ -612,11 +612,6 @@ strong { color: var(--ink); font-weight: 600; }
 .qz-answer.good { border-color: #2E7D4F; background: #EAF5EE; }
 .qz-answer.bad { border-color: #B3423A; background: #FBEEEC; }
 .qz-score { font-family: var(--serif); font-size: 2.6rem; color: var(--plum); margin-bottom: .4rem; }
-.qz-reward {
-  margin: 1.6rem auto; padding: 1.2rem 1.4rem; max-width: 420px;
-  background: var(--rose-wash); border: 1px dashed var(--rose); border-radius: var(--radius);
-}
-.qz-reward strong { display: block; font-size: 1.25rem; letter-spacing: .12em; color: var(--rose-deep); margin: .3rem 0; }
 .qz-review { text-align: left; margin: 1.8rem 0 1.4rem; display: grid; gap: .9rem; }
 .qz-review li { font-size: .92rem; line-height: 1.55; padding-left: 1.6rem; position: relative; color: var(--ink-soft); }
 .qz-review li::before { position: absolute; left: 0; top: 0; }
