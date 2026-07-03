@@ -65,6 +65,7 @@
       <li><a href="#process"  class="nl">Approach</a></li>
       <li><a href="#about"    class="nl">About</a></li>
       <li><a href="#videos"   class="nl">Videos</a></li>
+      <li><a href="#quiz"     class="nl">Quiz</a></li>
       <li><a href="#stories"  class="nl">Stories</a></li>
       <li><a href="#faq"      class="nl">FAQ</a></li>
       <li><a href="#contact"  class="nl nl-cta">Book a call</a></li>
@@ -73,8 +74,9 @@
 </header>
 
 <!-- ════════════════════ HERO ════════════════════ -->
+<div class="page-glow" id="pageGlow" aria-hidden="true"></div>
+
 <section id="home" class="hero">
-  <div class="hero-glow" aria-hidden="true"></div>
   <div class="hero-inner container">
 
     <div class="hero-copy hero-enter">
@@ -395,6 +397,44 @@
     <div class="section-cta reveal-up">
       <a href="https://www.youtube.com/@OlgaGuideHub" target="_blank" rel="noopener" class="btn btn-ghost">See all videos on YouTube</a>
     </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════ QUIZ ════════════════════ -->
+<section id="quiz" class="quiz">
+  <div class="container">
+
+    <div class="section-hd reveal-up">
+      <span class="eyebrow">The 60 second challenge</span>
+      <h2>Could you pass<br /><em>a USCIS interview?</em></h2>
+      <p class="section-sub">Six real style questions, sixty seconds on the clock. Finish in time and a small reward is waiting for you at the end.</p>
+    </div>
+
+    <div class="quiz-card reveal-up" id="quizCard">
+
+      <div class="qz-screen" id="qzStart">
+        <div class="qz-emoji">🎯</div>
+        <h3>Ready when you are</h3>
+        <p>Six questions, sixty seconds. Answer the way you would in the interview room: calm, honest, and clear.</p>
+        <button class="btn btn-rose btn-lg" id="qzStartBtn">Start the challenge</button>
+      </div>
+
+      <div class="qz-screen hidden" id="qzPlay">
+        <div class="qz-top">
+          <span class="qz-count" id="qzCount">Question 1 of 6</span>
+          <span class="qz-clock" id="qzClock">60</span>
+        </div>
+        <div class="qz-bar"><div class="qz-bar-fill" id="qzBar"></div></div>
+        <p class="qz-q" id="qzQ"></p>
+        <div class="qz-answers" id="qzA"></div>
+      </div>
+
+      <div class="qz-screen hidden" id="qzEnd"></div>
+
+    </div>
+
+    <p class="qz-note reveal-up">This quiz is general information to help you feel prepared. It is not legal advice.</p>
 
   </div>
 </section>

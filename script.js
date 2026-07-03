@@ -137,26 +137,29 @@ if (trustNums.length && !prefersReducedMotion) {
   trustNums.forEach(el => countObs.observe(el));
 }
 
-/* ── Hero: 3D photo tilt + cursor glow (desktop, motion-safe) ── */
+/* ── Page-wide cursor glow + hero 3D photo tilt (desktop, motion-safe) ── */
 if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
+  const glow = document.getElementById('pageGlow');
+  if (glow) {
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+      glow.classList.add('on');
+    });
+    document.documentElement.addEventListener('mouseleave', () => glow.classList.remove('on'));
+  }
+
   const hero = document.querySelector('.hero');
   const frame = document.querySelector('.hero-frame');
-  const glow = document.querySelector('.hero-glow');
-
-  if (hero && frame && glow) {
+  if (hero && frame) {
     hero.addEventListener('mousemove', e => {
       const r = frame.getBoundingClientRect();
       const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
       const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
       const clamp = v => Math.max(-0.6, Math.min(0.6, v));
       frame.style.transform = `rotateY(${clamp(dx) * 7}deg) rotateX(${-clamp(dy) * 7}deg)`;
-
-      const hr = hero.getBoundingClientRect();
-      glow.style.left = (e.clientX - hr.left) + 'px';
-      glow.style.top = (e.clientY - hr.top) + 'px';
-      glow.classList.add('on');
     });
-    hero.addEventListener('mouseleave', () => { frame.style.transform = ''; glow.classList.remove('on'); });
+    hero.addEventListener('mouseleave', () => { frame.style.transform = ''; });
   }
 
   /* Subtle hero parallax */
@@ -165,5 +168,182 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover)').matches) {
     window.addEventListener('scroll', () => {
       if (window.scrollY < 900) heroVisual.style.transform = `translateY(${window.scrollY * 0.05}px)`;
     }, { passive: true });
+  }
+}
+
+/* ── USCIS Interview Readiness Quiz ── */
+const QUIZ = [
+  {
+    q: 'The officer asks: "How did you and your spouse meet?" What is the best way to answer?',
+    a: [
+      'Tell the whole story in every detail, starting from years back',
+      'Answer briefly and honestly: where, when, and how the relationship grew',
+      'Repeat the exact answer you memorized word for word'
+    ],
+    correct: 1,
+    why: 'Short, honest, natural answers work best. You are not performing a script.'
+  },
+  {
+    q: 'You are asked about a trip abroad but you do not remember the exact date. What do you do?',
+    a: [
+      'Give your best guess so you do not look unprepared',
+      'Say you never traveled, it is simpler',
+      'Ask to check your notes so you give the correct information'
+    ],
+    correct: 2,
+    why: 'Accuracy beats speed. Checking your documents is completely allowed.'
+  },
+  {
+    q: 'In 2026 many field offices interview married couples in a new way. Which one?',
+    a: [
+      'Spouses are interviewed separately and their answers are compared',
+      'Spouses are always interviewed together in one room',
+      'Spouse interviews were cancelled'
+    ],
+    correct: 0,
+    why: 'Separate interviews are the new normal, so honesty and consistency matter more than ever.'
+  },
+  {
+    q: 'The officer asks something you did not understand. What now?',
+    a: [
+      'Answer what you think they probably meant',
+      'Politely ask the officer to repeat or rephrase the question',
+      'Stay quiet until they move on'
+    ],
+    correct: 1,
+    why: 'Asking to repeat a question is normal and shows care, not weakness.'
+  },
+  {
+    q: 'Under the May 2026 memo, officers may ask why you applied inside the US instead of at a consulate abroad. How do you prepare?',
+    a: [
+      'Be ready to explain your honest reasons calmly',
+      'Refuse to answer, that question is not allowed',
+      'Say your lawyer told you to'
+    ],
+    correct: 0,
+    why: 'The new memo makes this a real question. A calm, truthful explanation is your best answer.'
+  },
+  {
+    q: 'What do you bring to the interview?',
+    a: [
+      'Just your ID, they already have your file',
+      'Originals and copies of your documents, organized and easy to find',
+      'Nothing, carrying papers looks nervous'
+    ],
+    correct: 1,
+    why: 'An organized folder can save your interview when a surprise question comes up.'
+  }
+];
+
+const QUIZ_TIME = 60;
+const qzStart = document.getElementById('qzStart');
+const qzPlay = document.getElementById('qzPlay');
+const qzEnd = document.getElementById('qzEnd');
+
+if (qzStart && qzPlay && qzEnd) {
+  const qzQ = document.getElementById('qzQ');
+  const qzA = document.getElementById('qzA');
+  const qzCount = document.getElementById('qzCount');
+  const qzClock = document.getElementById('qzClock');
+  const qzBar = document.getElementById('qzBar');
+
+  let idx = 0, score = 0, timeLeft = QUIZ_TIME, timer = null, picks = [], locked = false, done = false;
+
+  document.getElementById('qzStartBtn').addEventListener('click', startQuiz);
+
+  function startQuiz() {
+    idx = 0; score = 0; timeLeft = QUIZ_TIME; picks = []; locked = false; done = false;
+    qzStart.classList.add('hidden');
+    qzEnd.classList.add('hidden');
+    qzPlay.classList.remove('hidden');
+    qzClock.textContent = timeLeft;
+    qzClock.classList.remove('low');
+    qzBar.style.width = '100%';
+    timer = setInterval(tick, 1000);
+    showQuestion();
+  }
+
+  function tick() {
+    timeLeft--;
+    qzClock.textContent = Math.max(timeLeft, 0);
+    qzBar.style.width = (Math.max(timeLeft, 0) / QUIZ_TIME * 100) + '%';
+    if (timeLeft <= 10) qzClock.classList.add('low');
+    if (timeLeft <= 0) finish(false);
+  }
+
+  function showQuestion() {
+    const item = QUIZ[idx];
+    qzCount.textContent = 'Question ' + (idx + 1) + ' of ' + QUIZ.length;
+    qzQ.textContent = item.q;
+    qzA.innerHTML = '';
+    locked = false;
+    item.a.forEach((text, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'qz-answer';
+      btn.textContent = text;
+      btn.addEventListener('click', () => pick(i, btn));
+      qzA.appendChild(btn);
+    });
+  }
+
+  function pick(i, btn) {
+    if (locked) return;
+    locked = true;
+    const item = QUIZ[idx];
+    picks.push(i);
+    if (i === item.correct) { score++; btn.classList.add('good'); }
+    else {
+      btn.classList.add('bad');
+      qzA.children[item.correct].classList.add('good');
+    }
+    setTimeout(() => {
+      if (done) return;
+      idx++;
+      if (idx >= QUIZ.length) finish(true);
+      else showQuestion();
+    }, 650);
+  }
+
+  function finish(inTime) {
+    if (done) return;
+    done = true;
+    clearInterval(timer);
+    qzPlay.classList.add('hidden');
+    qzEnd.classList.remove('hidden');
+
+    let headline, sub;
+    if (!inTime) {
+      headline = '⏰ Time is up!';
+      sub = 'The real interview will not rush you like this, promise. Want another try?';
+    } else if (score === QUIZ.length) {
+      headline = '🎉 ' + score + ' out of ' + QUIZ.length + '. Officer level calm!';
+      sub = 'You clearly did your homework. Imagine how ready you will feel after we prep together.';
+    } else if (score >= 4) {
+      headline = '💪 ' + score + ' out of ' + QUIZ.length + '. Almost there!';
+      sub = 'A strong result. The last details are exactly what we polish in a coaching session.';
+    } else {
+      headline = '🌱 ' + score + ' out of ' + QUIZ.length + '. Good start!';
+      sub = 'Most people score here before preparing. That is exactly why preparation works.';
+    }
+
+    let html = '<div class="qz-score">' + headline + '</div><p>' + sub + '</p>';
+
+    if (inTime) {
+      html += '<div class="qz-reward">🎁 You finished the 60 second challenge!' +
+        '<strong>READY10</strong>' +
+        'Mention this code when you book and get 10% off your 30 minute session.</div>';
+      html += '<ul class="qz-review">';
+      QUIZ.forEach((item, i) => {
+        const ok = picks[i] === item.correct;
+        html += '<li class="' + (ok ? 'ok' : 'miss') + '"><strong>' + item.q + '</strong><br>' + item.why + '</li>';
+      });
+      html += '</ul>';
+      html += '<a href="#contact" class="btn btn-rose btn-lg">Book your session</a> ';
+    }
+    html += '<button type="button" class="btn btn-ghost" id="qzRetry">Try again</button>';
+
+    qzEnd.innerHTML = html;
+    document.getElementById('qzRetry').addEventListener('click', startQuiz);
   }
 }
